@@ -1,8 +1,4 @@
-function statement (invoice, plays) {
-    return renderPlainText(createStatementData(invoice, plays));
-}
-
-function createStatementData(invoice, plays){
+export default function createStatementData(invoice, plays){
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
@@ -62,43 +58,3 @@ function createStatementData(invoice, plays){
     return result;
   }
 }
-
-function renderPlainText(data, plays) {
-  let result = `Statement for ${data.customer}\n`;
-  for (let perf of data.performances) {
-    result += `  ${perf.play.name}: ${usd(perf.amount)}        (${perf.audience} seats)\n`;
-  }
-
-  result += `Amount owed is ${usd(data.totalAmount)}\n`;
-  result += `You earned ${data.totalVolumeCredits} credits\n`;
-  return result;
-
-  function usd(aNumber) {
-    return new Intl.NumberFormat("en-US",
-                        { style: "currency", currency: "USD",
-                          minimumFractionDigits: 2 }).format(aNumber);
-  }
-}
-
-const fs = require('fs');
-
-let plays;
-let invoice;
-
-try {
-  const jsonString = fs.readFileSync('./plays.json');
-  plays = JSON.parse(jsonString);
-} catch(err) {
-  console.log(err);
-  return;
-}
-
-try {
-  const jsonString = fs.readFileSync('./invoice.json');
-  invoice = JSON.parse(jsonString);
-} catch(err) {
-  console.log(err);
-  return;
-}
-
-console.log(statement(invoice, plays));
