@@ -2,7 +2,7 @@
 
 Code used in chapter 1 of Martin Fowler's book "Refactoring: Improving the Design of Existing Code."
 
-![cover image](cover-image.jpeg)
+![cover image](cover-image.jpeg?s=100)
 
 To run the code example at the earlier stages of the refactoring (when you see a file named `statement.js`):
 ```
